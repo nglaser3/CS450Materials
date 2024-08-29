@@ -1,0 +1,106 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage{biblatex} %Imports biblatex package
+\addbibresource{sample.bib}
+\usepackage[english]{babel}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{pythonhighlight}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{longtable}
+\doublespacing
+
+\begin{document}
+\begin{titlepage}
+
+\centering
+\scshape
+\vspace{\baselineskip}
+
+%
+\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+\rule{\textwidth}{0.4pt}
+
+{\Huge \textbf{\textsc{CS 450: Homework 1 \\
+\vspace{15pt}}}}
+
+\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+\rule{\textwidth}{1.6pt}\vspace{6pt}
+\centerline{\textit{University of Illinois at Urbana-Champaign}} 
+\vspace{1.5\baselineskip}
+
+
+\large \centerline{\textbf{Author:} Nathan Glaser}
+\large \centerline{\textbf{Net-ID:} nglaser3}
+\quad
+
+\large \centerline{\textbf{Professor:} Andreas Kloeckner}
+\quad
+
+\vfill
+\large \centerline{August 28, 2024}
+%
+\pagenumbering{gobble}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Question 1}
+To begin, the following equation must be satisfied (problem statement):
+\begin{equation}
+    f^{(n)}(x) = \frac{f(x) -2 \cdot f(x-h) + f(x-2h)}{h^2}
+    \label{abc}
+\end{equation}
+
+The Taylor series expansion definition:
+\begin{equation}
+    \label{taylor_expansion_definition}
+    \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!}(x-a)^n
+\end{equation}
+
+Expanding $f(x-h)$ using Eq. \ref{taylor_expansion_definition}, setting $x-a = h$:
+
+\begin{equation}
+    \label{fx_h}
+    f(x-h) = f(x) - h\cdot f'(x) + h^2 \cdot \frac{f''(x)}{2}  ....
+\end{equation}
+
+Similarly, expanding $f(x-2h)$:
+\begin{equation}
+    \label{fx_2h}
+    f(x-2h) = f(x) -2h\cdot f'(x) + 2h^2\cdot f''(x) ....
+\end{equation}
+
+plugging in the expanded forms of $f(x-h)$ and $f(x-2h)$ into Eq. \ref{abc}, we see which terms cancel out. 
+
+$f(x)$ cancels out as $1-2+1 = 0$.
+
+$f'(x)$ also cancels out, as $(-2 \cdot -1) + (1 \cdot-2) = 0$.
+
+For $f''(x)$, $(-2 \cdot \frac{1}{2}) + (1 \cdot 2) = 1$.
+
+Thus, this approximation is for the second derivative of $f(x)$.
+
+\section{Question 2}
+The truncation error is $\mathcal{O}(h^3)$, or third order accurate, as the lowest order term 'truncated' from the approximation is $\alpha h^3f'''(x)$. This approximation is exact when h is equal to 0.
+
+\section{Question 3}
+No Idea
+
+\end{document}

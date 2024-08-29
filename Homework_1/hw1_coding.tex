@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage{pythonhighlight}
+
+\begin{document}
+\begin{python}
+import numpy as np
+import numpy.linalg as la
+
+
+
+numerical_ranks = np.zeros(11)
+
+def findA(_x,_y):
+    _A = np.zeros((N, N))
+    for i in range(N):
+        for j in range(N):
+            _A[i,j] = 1/la.norm(_x[i]-_y[j],2)
+    return _A
+def findR(S,tol=1):
+    sum = 0
+    for val in S:
+        if val > tol:
+            sum += 1
+    return sum
+
+A = findA(x,y)
+
+for n in range(11):
+    _yn = y + np.array([n,0,0])
+    A_ = findA(x,_yn)
+    S = la.svd(A_,compute_uv=False)
+    #print(S)
+    numerical_ranks[n]=findR(S,tolerance)
+
+import matplotlib.pyplot as plt
+plt.plot(numerical_ranks)
+\end{python}
+\end{document}
