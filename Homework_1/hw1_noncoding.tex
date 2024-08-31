@@ -52,7 +52,7 @@
 \quad
 
 \vfill
-\large \centerline{August 28, 2024}
+\large \centerline{August 31, 2024}
 %
 \pagenumbering{gobble}
 \end{titlepage}
@@ -98,9 +98,45 @@ For $f''(x)$, $(-2 \cdot \frac{1}{2}) + (1 \cdot 2) = 1$.
 Thus, this approximation is for the second derivative of $f(x)$.
 
 \section{Question 2}
-The truncation error is $\mathcal{O}(h^3)$, or third order accurate, as the lowest order term 'truncated' from the approximation is $\alpha h^3f'''(x)$. This approximation is exact when h is equal to 0.
+The truncation error is $\mathcal{O}(h^3)$, or third order accurate, as the lowest order term 'truncated' from the approximation is $\alpha h^3f'''(x)$. This approximation is exact when the function being approximated is a 2nd order or lower polynomial.
 
 \section{Question 3}
-No Idea
+To begin, simply substituting in the finite difference scheme:
+
+\begin{equation}
+    \left| g(x,h) - \hat{g}(x,h) \right| = \frac{\left| f(x-2h)-f(x \Theta 2h) - 2f(x-h) + 2f(x \Theta h) \right|}{h^2}
+\end{equation}
+
+Then, by the triangle in-equality:
+
+\begin{equation}
+    R.H.S. \leq \frac{\left| f(x-2h)-f(x \Theta 2h) \right|}{h^2} + 2\frac{\left|-f(x-h) + f(x \Theta h) \right|}{h^2}
+\end{equation}
+
+Then:
+\begin{equation}
+    \left| f(x) - f(\hat{x})\right| = \left|f(x)\right| \frac{\left|x-\hat{x}\right|}{\left|x\right|}
+\end{equation}
+
+And:
+\begin{equation}
+    \frac{\left| (x\Theta \alpha h) - (x - \alpha h) \right|}{(x - \alpha h)} \leq \epsilon
+\end{equation}
+
+where this epsilon equation replaces much of the R.H.S. of Eq. 7: 
+\begin{equation}
+    \left|f(x)\right| \frac{\left|x-\hat{x}\right|}{\left|x\right|} = \epsilon \left|f(x)\right|
+\end{equation}
+
+substituting this in, where 'x' can be any $x-\alpha h$:
+
+\begin{equation}
+    \frac{\epsilon(\left| f(x-2h) \right| + 2 \left| f(x-h) \right|)}{h^2}
+\end{equation}
+
+And finally, the upper bound of $f(x-\alpha h) = 2f(x)$, thus the upper bound is:
+\begin{equation}
+    \left| g(x,h) - \hat{g}(x,h) \right| \leq \frac{6\epsilon f(x)}{h^2}
+\end{equation}
 
 \end{document}
