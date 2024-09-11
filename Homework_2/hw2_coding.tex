@@ -1,0 +1,280 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage{biblatex} %Imports biblatex package
+\addbibresource{sample.bib}
+\usepackage[english]{babel}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{pythonhighlight}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{longtable}
+\doublespacing
+
+\begin{document}
+\begin{titlepage}
+
+\centering
+\scshape
+\vspace{\baselineskip}
+
+%
+\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+\rule{\textwidth}{0.4pt}
+
+{\Huge \textbf{\textsc{CS 450: Homework 2 \\
+\vspace{15pt}}}}
+
+\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+\rule{\textwidth}{1.6pt}\vspace{6pt}
+\centerline{\textit{University of Illinois at Urbana-Champaign}} 
+\vspace{1.5\baselineskip}
+
+
+\large \centerline{\textbf{Author:} Nathan Glaser}
+\large \centerline{\textbf{Net-ID:} nglaser3}
+\quad
+
+\large \centerline{\textbf{Professor:} Andreas Kloeckner}
+\quad
+
+\vfill
+\large \centerline{September 11, 2024}
+%
+\pagenumbering{gobble}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section*{Question 1}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 1}
+
+\begin{equation}
+    \Tilde{p}(r) = p(r) + \delta(r)
+    \label{ptil_def}
+\end{equation}
+
+\begin{equation}
+    \label{rdef}
+    \Tilde{r} = r + \Delta r
+\end{equation}
+
+\begin{equation}
+    \epsilon_{b,rel} = \frac{\left| \Tilde{p}-p \right|}{|p|} = \frac{\left| \delta \right|}{|p|}
+    \label{brel_def}
+\end{equation}
+
+\begin{equation}
+    \label{taydef}
+    f(a) = \sum_{n=0}^\infty \frac{f^n(x)}{n!} (x-a)^n
+\end{equation}
+
+
+\begin{equation}
+    \left| \delta'(r)\right| \leq 2\left| \Delta r \right|
+    \label{del_prime}
+\end{equation}
+
+Expanding $\Tilde{p}(\Tilde{r})$ about r we obtain a definition for $\delta(r)$. 
+
+First the preliminary expansion, ignoring second$+$ order terms:
+
+\begin{equation}
+    \Tilde{p}(\Tilde{r}) = \Tilde{p}(r) - \Tilde{p}'(r)\Delta r
+\end{equation}
+
+Substituting definitions of $\Tilde{p}$, the  L.H.S. is 0 and every instance of $\Tilde{p}$ is substituted with Eq. \ref{ptil_def}:
+
+\begin{equation}
+    0 = p(r) + \delta(r) - (p'(r)+\delta'(r))\Delta r 
+\end{equation}
+
+Next, Eq. \ref{del_prime}:
+
+\begin{equation}
+    0 \leq p(r) + \delta(r) - p'(r)\Delta(r)+2(\Delta r)^2
+\end{equation}
+
+Finally, cancelling the second order term and rearranging:
+
+\begin{equation}
+    \delta (r) \leq p'(r)\Delta r
+\end{equation}
+
+and then substituting into Eq. \ref{brel_def}:
+
+\begin{equation}
+    \epsilon_{b,rel} = \frac{\left| \delta \right|}{|p|} \leq \frac{p'(r)\Delta r}{p(r)} \cdot\frac{r}{r}
+\end{equation}
+
+\newpage
+
+
+\section*{Question 2}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 2}
+
+Inserting the polynomials into Eq. \ref{brel_def}, we obtain:
+\begin{equation}
+    \frac{|c^n|}{|(x-r)^n|}
+    \label{q2_be}
+\end{equation}
+
+recognizing we are computing the p norm where p=1, and so the norm is simply the sum of coefficients. Further, This denominator is a binomial series of input x and r. So, the denominator becomes:
+\begin{equation}
+    |(x-r)^n| = \left|\sum_{i=0}^n {{r\choose x}r^{n-i}x^i} \right| = \sum_{i=0}^n {{r\choose x}r^{n-i}} \geq r^n
+\end{equation}
+
+Thus, because $r^n$ is less than the full series, and because the series is in the denominator of Eq. \ref{q2_be}, the relative backward error simplifies to:
+
+\begin{equation}
+    \leq \frac{|c^n|}{|(r)^n|}
+\end{equation}
+
+
+
+The root of $p(x)$ is simply r. The root of $\Tilde{p}(x)$ is found through inverting the function:
+\begin{equation}
+    root = r \pm c
+    \label{root_pert}
+\end{equation}
+
+Where $\Tilde{p}$ has a root only at $r + c$ when n is odd, and $r \pm c$ when n is even. 
+
+The relative forward error is simply Eq. a\ref{frel__}, and then from Eq. \ref{root_pert}:
+
+\begin{equation}
+    \epsilon_{f,rel} = \frac{|\Tilde{r}-r|}{|r|}
+    \label{frel__}
+\end{equation}
+
+
+
+\begin{equation}
+    \epsilon_{f,rel} = \frac{|c|}{|r|}
+\end{equation}
+
+Finally, as n increases the problem becomes worse and worse conditioned. 
+This can be seen blatantly from the definition of the conditioning number:
+
+\begin{equation}
+    \left|\frac{c}{r}\right| \leq \kappa \left|\frac{c}{r}\right|^n
+\end{equation}
+and solving for kappa, we see that, because $r\>c$, as n increases so does kappa:
+
+\begin{equation}
+    \left| \frac{r}{c}\right|^{n-1} \leq \kappa
+\end{equation}
+And because kappa is increasing, the problem is worse and worse conditioned.
+
+
+
+\section*{Question 3}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 3}
+
+To begin, because f is diffeomorphic (f is differentiable, f has an inverse, f's inverse is differentiable), the following theorem applies: 
+
+\begin{equation}
+    \left[f^{-1}\right]'(x) = \frac{1}{f'(f^{-1}(x))}
+\end{equation}
+
+utilizing this definition, as well as the definition of $\kappa_{abs}$ below:
+
+\begin{equation}
+    \kappa_{abs} = \left| f'(x) \right|
+\end{equation}
+
+we determine that:
+
+\begin{equation}
+    \kappa_{inv} = \left| \frac{1}{p'(p^{-1}(x))} \right|
+\end{equation}
+
+recognizing that both $p^{-1}(x)$ and $p'(x)$ are defined such that their domains are x $\in \Re$, then the above denominator is identical to saying $p'(x)$, and again using the definition for $\kappa_{abs}$ from above:
+
+\begin{equation}
+    \kappa_{inv} = \frac{1}{p'(x)} = \frac{1}{\kappa_{abs}}
+\end{equation}
+
+\quad
+
+\quad
+
+Now for the next part. To recap:
+\begin{equation}
+    \epsilon_{b,rel} \geq \left|\frac{\Delta r}{r}\right|\left| \frac{r p'(r)}{p(r)}\right|
+    \label{q1end}
+\end{equation}
+
+\begin{equation}
+    \epsilon_{f,rel} = \left|\frac{\Delta r}{r}\right|
+    \label{epsfrel}
+\end{equation}
+
+\begin{equation}
+    \epsilon_{b,rel} = \left|\frac{\Tilde{p} - p}{p}\right|
+    \label{epsbrel}
+\end{equation}
+
+\begin{equation}
+    \kappa_{rel} = \left| \frac{r p'(r)}{p(r)}\right|
+    \label{kapreldef}
+\end{equation}
+
+\begin{equation}
+    \epsilon_{f,rel} \leq \kappa_{rel} \epsilon_{b,rel}
+    \label{kappadef}
+\end{equation}
+
+\begin{equation}
+    \kappa_{inv}=\frac{1}{\kappa_{abs}}=\frac{r}{\kappa_{rel} p}
+    \label{kappainvdef}
+\end{equation}
+
+To begin, solving Eq. \ref{kappadef} for $\kappa$:
+\begin{equation}
+    \kappa_{rel} \geq \frac{\epsilon_{f,rel}}{\epsilon_{b,rel}}
+\end{equation}
+
+And then inserting Eqs. \ref{epsfrel} and \ref{kapreldef} into Eq. \ref{q1end}:
+\begin{equation}
+    \epsilon_{b,rel} \geq \epsilon_{f,rel} \kappa_{rel}
+\end{equation}
+
+solving for $\kappa$:
+\begin{equation}
+    \kappa_{rel} \leq \frac{\epsilon_{b,rel}}{\epsilon_{f,rel}}  
+\end{equation}
+
+Solving Eq. \ref{kappainvdef} for $\kappa_{rel}$:
+\begin{equation}
+    \kappa_{rel} = \frac{r}{\kappa_{inv} p}
+\end{equation}
+
+Inserting this into the previous equation, multiplying both sides by p and r (to convert the relative forward and backward errors to absolute):
+
+\begin{equation}
+    \frac{1}{\kappa_{inv}} \leq \frac{\epsilon_{b,abs}}{\epsilon_{f,abs}}
+\end{equation}
+
+Finally, recognizing the R.H.S is simply $\frac{1}{\kappa_{abs}}$, and taking the inverse of the equation:
+
+\begin{equation}
+    \kappa_{inv} \geq \kappa_{abs}
+\end{equation}
+
+\end{document}
