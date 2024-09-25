@@ -1,0 +1,180 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage{biblatex} %Imports biblatex package
+\addbibresource{sample.bib}
+\usepackage[english]{babel}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{pythonhighlight}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{longtable}
+\doublespacing
+
+\begin{document}
+\newcommand{\R}{${\rm I\!R}$}
+\newcommand{\norm}[1]{\| #1 \|_2}
+\newcommand{\nmv}[2]{\norm{\textbf{#1}\Vec{#2}}}
+\newcommand{\abs}[1]{\bigl| #1 \bigr|}
+\begin{titlepage}
+
+\centering
+\scshape
+\vspace{\baselineskip}
+
+%
+\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+\rule{\textwidth}{0.4pt}
+
+{\Huge \textbf{\textsc{CS 450: Homework 3 \\
+\vspace{15pt}}}}
+
+\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+\rule{\textwidth}{1.6pt}\vspace{6pt}
+\centerline{\textit{University of Illinois at Urbana-Champaign}} 
+\vspace{1.5\baselineskip}
+
+
+\large \centerline{\textbf{Author:} Nathan Glaser}
+\large \centerline{\textbf{Net-ID:} nglaser3}
+\quad
+
+\large \centerline{\textbf{Professor:} Andreas Kloeckner}
+\quad
+
+\vfill
+\large \centerline{September 25, 2024}
+%
+\pagenumbering{gobble}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section*{Question 1}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 1}
+
+To begin, some prerequisite definitions:
+
+\begin{equation}
+    \label{eq:invdef}
+    \textbf{A}^{-1}\textbf{A}\Vec{x} = \Vec{x}
+\end{equation}
+
+\begin{equation}
+    \norm{\textbf{A}\Vec{x}} \leq \norm{\textbf{A}}\cdot\norm{\Vec{x}}
+    \label{eq:leqdef}
+\end{equation}
+
+To begin, we take the 2-norm of Eq. \ref{eq:invdef}:
+
+\begin{equation}
+    \norm{\textbf{A}^{-1}\textbf{A}\Vec{x}} = \norm{\Vec{x}}
+\end{equation}
+
+substituting in $\textbf{A}^{-1}$ in for $\textbf{A}$ and $\textbf{A}\Vec{x}$ for $\Vec{x}$ in Eq. \ref{eq:leqdef}, we obtain the following inequality:
+
+\begin{equation}
+    \norm{\Vec{x}} \leq \norm{\textbf{A}^{-1}}\norm{\textbf{A}\Vec{x}}
+\end{equation}
+
+and simply rearranging:
+
+\begin{equation}
+    \frac{\norm{\Vec{x}}}{\norm{\textbf{A}^{-1}}} \leq \norm{\textbf{A}\Vec{x}}
+    \label{eq:ansq1}
+\end{equation}
+
+\newpage
+\section*{Question 2}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 2}
+
+To begin, add and subtract $\nmv{B}{x}$ from some arbitrary norm $\nmv{A}{x}$ and apply a total absolute value to the equation:
+
+\begin{equation}
+    \abs{\nmv{A}{x}} = \abs{\nmv{A}{x} + \nmv{B}{x} - \nmv{B}{x}}
+\end{equation}
+
+Then applying the triangle-rule, pulling out $\nmv{A}{x}$ and $-\nmv{B}{x}$:
+
+\begin{equation}
+    \nmv{A}{x} \leq \abs{\nmv{A}{x}-\nmv{B}{x}} + \nmv{B}{x}
+    \label{eq:midq2}
+\end{equation}
+
+note the absolute value bars dropped from the two standalone norms, this is because a norm is always positive. Next, the 'inverse' triangle rule (Page 53 in textbook) is:
+
+\begin{equation}
+    \abs{\norm{\Vec{x}} - \norm{\Vec{y}}} \leq \norm{\Vec{x} - \Vec{y}}
+\end{equation}
+
+applying this to Eq. \ref{eq:midq2}, we obtain:
+
+\begin{equation}
+    \nmv{A}{x} \leq \abs{\norm{\textbf{A}\Vec{x}-\textbf{B}\Vec{x}}} + \nmv{B}{x}
+\end{equation}
+
+And then pulling out $\Vec{x}$ from the large chunk, and then because A-B linearly scales vector $\Vec{x}$, we can pull that out of the norm (maintaining a norm on it):
+
+\begin{equation}
+    \nmv{A}{x} \leq \norm{\textbf{A}-\textbf{B}}\cdot\norm{\Vec{x}} + \nmv{B}{x}
+    \label{eq:ansq2}
+\end{equation}
+
+
+\newpage
+\section*{Question 3}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 3}
+
+To begin, we assume the following condition to be true:
+
+\begin{equation}
+    \frac{\norm{\textbf{A}-\textbf{B}}}{\norm{\textbf{A}}} < \frac{1}{\kappa_2 (\textbf{A})}
+\end{equation}
+
+If we multiply the L.H.S. by $\frac{\norm{\Vec{x}}}{\norm{\Vec{x}}}$ (1):
+
+\begin{equation}
+    \frac{\norm{\textbf{A}-\textbf{B}}}{\norm{\textbf{A}}} \cdot \frac{\norm{\Vec{x}}}{\norm{\Vec{x}}} < \frac{1}{\kappa_2 (\textbf{A})}
+\end{equation}
+
+And then applying a similair method used at the end of the previous question:
+
+\begin{equation}
+    \frac{\nmv{A}{x} - \nmv{B}{x}}{\norm{\textbf{A}}\norm{\Vec{x}}} < \frac{1}{\kappa_2 (\textbf{A})}
+\end{equation}
+
+And because we know A is invertible / non-singular, we can utilize Eq. \ref{eq:ansq1}:
+
+\begin{equation}
+    \frac{\frac{\norm{\Vec{x}}}{\norm{\textbf{A}^{-1}}} - \nmv{B}{x}}{\norm{\textbf{A}}\norm{\Vec{x}}} < \frac{1}{\kappa_2 (\textbf{A})}
+\end{equation}
+
+substituting in the definiton for a matrix conditioning number, $\kappa = \norm{\textbf{A}^{-1}}\norm{\textbf{A}}$, and rearranging:
+
+\begin{equation}
+    \frac{\norm{\Vec{x}}}{\norm{\textbf{A}^{-1}}} - \nmv{B}{x} < \frac{\norm{\Vec{x}}}{\norm{\textbf{A}^{-1}}}
+\end{equation}
+
+and further, subtracting out the fraction:
+
+\begin{equation}
+    \nmv{B}{x} > 0
+\end{equation}
+
+Because the norm of $\textbf{B}\Vec{x}$ is non-zero, we know it is non-zero. Assuming that $\textbf{B}\in \R^{n \times n}$ and that $\Vec{x}$ is a non-zero vector, then we know that $\textbf{B}$'s Null space must only contain the null vector, and is therefor not-singular. 
+\end{document}
